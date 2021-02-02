@@ -34,8 +34,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-/*
-
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
@@ -78,5 +76,4 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onTouchEvent(event)
     }
- */
 }
