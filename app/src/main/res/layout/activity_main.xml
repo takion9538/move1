@@ -8,18 +8,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context=".MainActivity">
-
+    tools:context=".MainActivity"
+    android:screenOrientation="landscape">
 
     <ImageView
         android:id="@+id/dot1"
-        android:layout_width="72dp"
-        android:layout_height="80dp"
+        android:layout_width="103dp"
+        android:layout_height="105dp"
         android:layout_row="1"
         android:layout_column="0"
+        android:src="@drawable/dot"
         android:translationX="0dp"
-        android:translationY="0dp"
-        app:srcCompat="@drawable/dot" />
+        android:translationY="0dp" />
 
     <Button
         android:id="@+id/Btn1"
@@ -27,15 +27,16 @@
         android:layout_height="100dp"
         android:layout_row="2"
         android:layout_column="0"
-        android:text="왼쪽" />
+        android:text="왼쪽"
+        android:translationX="5dp" />
 
     <Button
         android:id="@+id/Btn2"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_row="2"
-        android:layout_column="1"
+        android:layout_column="2"
         android:text="오른쪽"
-        android:translationX="10dp" />
+        android:translationX="-5dp" />
 
 </GridLayout>
