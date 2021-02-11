@@ -2,14 +2,17 @@ package com.budi.myapplication
 
 import android.animation.ObjectAnimator
 import android.graphics.Point
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View.*
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Thread.sleep
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,10 +35,22 @@ class MainActivity : AppCompatActivity() {
                         or SYSTEM_UI_FLAG_IMMERSIVE)
 
         // 버튼 1 선언 및 버튼터치 리스너 지정
-        Btn1!!.setOnTouchListener(onBtn1TouchListener)
+        Btn1.setOnTouchListener(onBtn1TouchListener)
 
         // 버튼 2 선언 및 버튼터치 리스너 지정
-        Btn2!!.setOnTouchListener(onBtn2TouchListener)
+        Btn2.setOnTouchListener(onBtn2TouchListener)
+
+//        val media1Player = MediaPlayer.create(this,R.raw.foot)
+//        Btn1.setOnClickListener{ media1Player.start()
+//            sleep(200L)
+//        }
+//        media1Player.release()
+//
+//        val media2Player = MediaPlayer.create(this,R.raw.foot)
+//        Btn2.setOnClickListener{ media2Player.start()
+//            sleep(200L)
+//        }
+//        media2Player.release()
     }
 
     // onBtnDown 작업을 처리하는 쓰레드를 생성
@@ -98,7 +113,6 @@ class MainActivity : AppCompatActivity() {
                         dot1.setImageResource(R.drawable.dot_left)
                         sleep(100L)
                         dot1.setImageResource(R.drawable.dot_left_2)
-                        
                     } 
                     catch (e: Exception) {
                         println("error")
@@ -122,14 +136,14 @@ class MainActivity : AppCompatActivity() {
                         sleep(100L)
                         dot1.setImageResource(R.drawable.dot_right_2)
                     } 
-                    
+                    s
                     catch (e: Exception) {
                         println("error")
                     }
                 }
             }
             sleep(100L)
-            return dot1.setImageResource(R.drawable.dot)
+            return dot1.setImageResource(R.drawable.witchtest)
             super.run()
         }
     }
