@@ -53,7 +53,9 @@ class MainActivity : AppCompatActivity() {
         // 버튼 2 선언 및 버튼터치 리스너 지정
         Btn2.setOnTouchListener(onBtn2TouchListener)
 
-
+        val bgm1 = MediaPlayer.create(applicationContext, R.raw.shiningstars)
+        bgm1.isLooping = true
+        bgm1.start()
     }
 
     // onBtnDown 작업을 처리하는 쓰레드를 생성
