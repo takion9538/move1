@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View.*
 import androidx.appcompat.app.AppCompatActivity
@@ -52,10 +53,7 @@ class MainActivity : AppCompatActivity() {
         // 버튼 2 선언 및 버튼터치 리스너 지정
         Btn2.setOnTouchListener(onBtn2TouchListener)
 
-        // 미디어 플레이어 bgm 1 을 무한반복함
-        val bgm1 = MediaPlayer.create(this, R.raw.shiningstars)
-        bgm1.start()
-        bgm1.setLooping(true)
+
     }
 
     // onBtnDown 작업을 처리하는 쓰레드를 생성
@@ -69,8 +67,8 @@ class MainActivity : AppCompatActivity() {
         override fun handleMessage(msg: Message) {
 
             // Handler 가 작동할 때 (Btn1 버튼을 키다운 할 때) 마다 도트의 위치를 왼쪽으로 100float 만큼 이동
-            ObjectAnimator.ofFloat(dot1, "translationX", dot1.x - 50f).apply {
-                duration = 100
+            ObjectAnimator.ofFloat(dot1, "translationX", dot1.x - 80f).apply {
+                duration = 200
                 start()
             }
         }
@@ -81,8 +79,8 @@ class MainActivity : AppCompatActivity() {
         override fun handleMessage(msg: Message) {
 
             // Handler 가 작동할 때 (Btn2 버튼을 키다운 할 때) 마다 도트의 위치를 오른쪽으로 100float 만큼 이동
-            ObjectAnimator.ofFloat(dot1, "translationX", dot1.x + 50f).apply {
-                duration = 100
+            ObjectAnimator.ofFloat(dot1, "translationX", dot1.x + 80f).apply {
+                duration = 200
                 start()
             }
         }
@@ -90,6 +88,9 @@ class MainActivity : AppCompatActivity() {
 
     // '터치쓰레드' 클래스를 생성
     private inner class TouchThread : Thread() {
+
+        // 사운드풀 풋프린트 선언
+        val footprint = soundPool.load(applicationContext, R.raw.footprint2,1)
 
         // run 함수 호출
         override fun run() {
@@ -108,19 +109,23 @@ class MainActivity : AppCompatActivity() {
                 
                 // 캐릭터가 화면의 왼쪽 끝에 닿기 전까지
                 if (dot1.x >= 0) {
-                    
+
                     // 좌측으로 이동하는 함수를 호출
                     touch1Handler.sendEmptyMessage(1)
                     sleep(100L)
 
                     try {
+                        // 걸음소리를 호출
+                        soundPool.play(footprint, 1.0f, 1.0f, 1, 0, 0.7f)
+
                         // 이미지의 리소스를 변경 (좌측으로 걷기)
-                        dot1.setImageResource(R.drawable.dot_left)
+                        dot1.setImageResource(R.drawable.witchtest)
                         sleep(100L)
-                        dot1.setImageResource(R.drawable.dot_left_2)
+                        dot1.setImageResource(R.drawable.witchtest)
                     } 
                     catch (e: Exception) {
                         println("error")
+                        sleep(100L)
                     }
                 }
             }
@@ -136,13 +141,16 @@ class MainActivity : AppCompatActivity() {
                     sleep(100L)
 
                     try {
+                        // 걸음소리를 호출
+                        soundPool.play(footprint, 1.0f, 1.0f, 1, 0, 0.7f)
+
                         // 이미지의 리소스를 변경 (우측으로 걷기)
                         dot1.setImageResource(R.drawable.dot_right)
                         sleep(100L)
                         dot1.setImageResource(R.drawable.dot_right_2)
                     }
                     catch (e: Exception) {
-                        println("error")
+                        sleep(100L)
                     }
                 }
             }
@@ -199,9 +207,5 @@ class MainActivity : AppCompatActivity() {
             }
             else -> return super.onTouchEvent(event)
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
     }
 }
