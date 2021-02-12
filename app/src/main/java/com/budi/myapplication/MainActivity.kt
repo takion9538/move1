@@ -1,20 +1,32 @@
 package com.budi.myapplication
 
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.graphics.Point
+import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.MediaPlayer
+import android.media.SoundPool
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View.*
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Thread.sleep
 
+
 class MainActivity : AppCompatActivity() {
+    
+    // 사운드 풀 선언
+    private val soundPool = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        SoundPool.Builder().setMaxStreams(8).build()
+    }
+    else {
+        SoundPool(8, AudioManager.STREAM_MUSIC, 1)
+    }
 
     // 각 버튼의 상태 저장
     private var Btn1Down = false
@@ -40,17 +52,10 @@ class MainActivity : AppCompatActivity() {
         // 버튼 2 선언 및 버튼터치 리스너 지정
         Btn2.setOnTouchListener(onBtn2TouchListener)
 
-//        val media1Player = MediaPlayer.create(this,R.raw.foot)
-//        Btn1.setOnClickListener{ media1Player.start()
-//            sleep(200L)
-//        }
-//        media1Player.release()
-//
-//        val media2Player = MediaPlayer.create(this,R.raw.foot)
-//        Btn2.setOnClickListener{ media2Player.start()
-//            sleep(200L)
-//        }
-//        media2Player.release()
+        // 미디어 플레이어 bgm 1 을 무한반복함
+        val bgm1 = MediaPlayer.create(this, R.raw.shiningstars)
+        bgm1.start()
+        bgm1.setLooping(true)
     }
 
     // onBtnDown 작업을 처리하는 쓰레드를 생성
@@ -64,8 +69,8 @@ class MainActivity : AppCompatActivity() {
         override fun handleMessage(msg: Message) {
 
             // Handler 가 작동할 때 (Btn1 버튼을 키다운 할 때) 마다 도트의 위치를 왼쪽으로 100float 만큼 이동
-            ObjectAnimator.ofFloat(dot1, "translationX", dot1.x - 70f).apply {
-                duration = 200
+            ObjectAnimator.ofFloat(dot1, "translationX", dot1.x - 50f).apply {
+                duration = 100
                 start()
             }
         }
@@ -76,8 +81,8 @@ class MainActivity : AppCompatActivity() {
         override fun handleMessage(msg: Message) {
 
             // Handler 가 작동할 때 (Btn2 버튼을 키다운 할 때) 마다 도트의 위치를 오른쪽으로 100float 만큼 이동
-            ObjectAnimator.ofFloat(dot1, "translationX", dot1.x + 70f).apply {
-                duration = 200
+            ObjectAnimator.ofFloat(dot1, "translationX", dot1.x + 50f).apply {
+                duration = 100
                 start()
             }
         }
@@ -135,15 +140,14 @@ class MainActivity : AppCompatActivity() {
                         dot1.setImageResource(R.drawable.dot_right)
                         sleep(100L)
                         dot1.setImageResource(R.drawable.dot_right_2)
-                    } 
-                    s
+                    }
                     catch (e: Exception) {
                         println("error")
                     }
                 }
             }
             sleep(100L)
-            return dot1.setImageResource(R.drawable.witchtest)
+            return dot1.setImageResource(R.drawable.witchdot1)
             super.run()
         }
     }
@@ -195,5 +199,9 @@ class MainActivity : AppCompatActivity() {
             }
             else -> return super.onTouchEvent(event)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
     }
 }
