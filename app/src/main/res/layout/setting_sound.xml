@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:screenOrientation="landscape">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="배경화면 음향"
+        android:textSize="80px"
+        android:layout_marginLeft="10dp"
+        />
+    <SeekBar
+        android:layout_width="650dp"
+        android:layout_height="65dp"
+        android:max="50"
+        android:id="@+id/setting_bg"
+        android:thumb="@drawable/slimetest"
+        android:layout_gravity="center"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="그 외 음향"
+        android:textSize="80px"
+        android:layout_marginLeft="10dp"
+        />
+    <SeekBar
+        android:layout_width="650dp"
+        android:layout_height="65dp"
+        android:max="50"
+        android:id="@+id/setting_other"
+        android:thumb="@drawable/slimetest"
+        android:layout_gravity="center"
+        />
+
+    <Button
+        android:id="@+id/setting_goHome"
+        android:text="홈화면"
+        android:textSize="70px"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="10dp"/>
+
+</LinearLayout>

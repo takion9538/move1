@@ -10,13 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Move">
 
+        <activity android:name=".DayOne" android:screenOrientation="landscape"/>
+        <activity android:name=".StartGame" android:screenOrientation="landscape"/>
         <activity android:name=".MainActivity" android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"  />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity android:name=".Setting" android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

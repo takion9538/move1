@@ -52,7 +52,6 @@
         android:scaleX="3.0"
         android:scaleY="3.0"
         android:src="@drawable/rabbittest"
-        android:translationX="30dp"
         android:translationY="60dp" />
 
     <ImageButton
