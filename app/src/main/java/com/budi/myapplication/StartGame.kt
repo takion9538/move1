@@ -8,6 +8,7 @@ import android.graphics.Point
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.*
@@ -50,7 +51,8 @@ class StartGame : AppCompatActivity() {
 
         // startgame 게임 시작
         startgame.setOnClickListener {
-            onStop()
+            finish()
+            Log.d("로그", "finish");
         }
     }
 }

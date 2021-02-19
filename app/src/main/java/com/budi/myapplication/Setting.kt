@@ -8,6 +8,7 @@ import android.graphics.Point
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.*
@@ -15,6 +16,7 @@ import android.view.WindowManager
 import android.widget.SeekBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,10 +28,23 @@ import kotlin.concurrent.thread
 
 class Setting : AppCompatActivity() {
 
+    private var soundDb : SoundDatabase? = null
+
+    var day = 0
+    var uid = 1
+    var bgm = 1
+    var effect = 2
+
+
     // 셋팅 화면
     // onCreate 함수 선언
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val db = Room.databaseBuilder(applicationContext,SoundDatabase::class.java, "sound")
+                .allowMainThreadQueries()
+                .build()
+
         setContentView(R.layout.setting_sound)
         this.getWindow().getDecorView().setSystemUiVisibility(
             SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -47,16 +62,29 @@ class Setting : AppCompatActivity() {
         setting_bg.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 
-                //onProgressChanged : "$progress"
+                seekBar!!.progress = bgm
+
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-                //seekBar!!.progress가 현재 바 상태
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                Log.d("bgm stop 로그", "${seekBar!!.progress}")
 
+                bgm = seekBar!!.progress
+
+                db.soundDao().update(
+                        Sound(
+                                uid = uid,
+                                bgm = bgm,
+                                effect = effect
+                        )
+                )
+
+                var soundData = db.soundDao().getAll()
+
+                Log.d("db 로그", "${soundData}")
 
             }
 
@@ -71,14 +99,30 @@ class Setting : AppCompatActivity() {
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
 
-                //seekBar!!.progress가 현재 바 상태
+                var soundData = db.soundDao().getAll()
+
+                seekBar!!.progress = effect
+
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                Log.d("effect stop 로그", "${seekBar!!.progress}")
 
+                effect = seekBar!!.progress
+
+                db.soundDao().update(
+                        Sound(
+                                uid = uid,
+                                bgm = bgm,
+                                effect = effect
+                        )
+                )
+
+                var soundData = db.soundDao().getAll()
+
+                Log.d("db 로그", "$soundData")
 
             }
-
         })
     }
 }

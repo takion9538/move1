@@ -1,16 +1,15 @@
 package com.budi.myapplication
 
-import android.animation.ObjectAnimator
-import android.content.Context
 import android.content.Intent
 import android.media.*
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View.*
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.start_game.*
+import androidx.room.Room
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {/*
 
     // 사운드 풀 선언
     private val soundPool = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -18,13 +17,39 @@ class MainActivity : AppCompatActivity() {
     }
     else {
         SoundPool(8, AudioManager.STREAM_MUSIC, 1)
-    }
+    }*/
 
-    public var day : Int = 0
+    var day = 0/*
+    var uid = 1
+    var bgm = 0
+    var effect = 0*/
 
     // onCreate 함수 선언
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        MediaPlayer.create(applicationContext, R.raw.restinforest)
+
+/*        val db = Room.databaseBuilder(applicationContext,SoundDatabase::class.java, "database-name")
+                .allowMainThreadQueries()
+                .build()*/
+
+/*        db.soundDao().insert(
+                Sound(
+                        uid = uid,
+                        bgm = bgm,
+                        effect = effect*//*,
+                        day = day*//*
+                )
+        )*/
+
+//        db.soundDao().delete()
+/*
+
+        var soundData = db.soundDao().getAll().joinToString()
+
+        Log.d("db 로그", "$soundData")
+*/
 
         // 네비게이션 바와 상태창 숨기기
         this.getWindow().getDecorView().setSystemUiVisibility(
@@ -35,18 +60,14 @@ class MainActivity : AppCompatActivity() {
                         or SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
                         or SYSTEM_UI_FLAG_IMMERSIVE)
 
-        if (day == 0) {
+        if (day == 1) {
             val gameStart = Intent(this, StartGame::class.java)
             startActivity(gameStart)
-            day++
         }
 
-        else if (day == 1) {
+        else if (day == 0) {
             val dayOne = Intent(this, DayOne::class.java)
             startActivity(dayOne)
-            day++
         }
-
-
     }
 }

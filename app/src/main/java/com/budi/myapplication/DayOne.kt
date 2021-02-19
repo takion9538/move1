@@ -3,6 +3,7 @@ package com.budi.myapplication
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Point
+import android.graphics.drawable.AnimationDrawable
 import android.media.*
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.*
+import android.view.animation.Animation
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -64,11 +66,14 @@ class DayOne : AppCompatActivity() {
     }
 
     override fun onStart() {
-        // 배경음악 설정 -> 모든 어플리케이션 콘텐츠에서 허용
-        val bgm1 = MediaPlayer.create(applicationContext, R.raw.restinforest)
 
-//        bgm1.start()
-        bgm1.isLooping = true
+        // 배경음악 설정 -> 모든 어플리케이션 콘텐츠에서 허용
+        val bgm  = MediaPlayer.create(applicationContext, R.raw.restinforest)
+
+        sleep(5000)
+
+        bgm.start()
+        bgm.isLooping = true
 
         super.onStart()
     }
@@ -84,8 +89,8 @@ class DayOne : AppCompatActivity() {
         override fun handleMessage(msg: Message) {
 
             // Handler 가 작동할 때 (Btn1 버튼을 키다운 할 때) 마다 도트의 위치를 왼쪽으로 100float 만큼 이동
-            ObjectAnimator.ofFloat(dot1, "translationX", dot1.x - 80f).apply {
-                duration = 500
+            ObjectAnimator.ofFloat(dot1, "translationX", dot1.x - 100f).apply {
+                duration = 700
                 start()
             }
         }
@@ -96,8 +101,8 @@ class DayOne : AppCompatActivity() {
         override fun handleMessage(msg: Message) {
 
             // Handler 가 작동할 때 (Btn2 버튼을 키다운 할 때) 마다 도트의 위치를 오른쪽으로 100float 만큼 이동
-            ObjectAnimator.ofFloat(dot1, "translationX", dot1.x + 80f).apply {
-                duration = 500
+            ObjectAnimator.ofFloat(dot1, "translationX", dot1.x + 100f).apply {
+                duration = 700
                 start()
             }
         }
@@ -107,8 +112,9 @@ class DayOne : AppCompatActivity() {
     private val slimeHandler: Handler = object : Handler() {
         override fun handleMessage(msg: Message) {
 
+
             ObjectAnimator.ofFloat(slime, "translationX", dot1.x -40f).apply {
-                duration = 500
+                duration = 700
                 start()
             }
         }
@@ -119,7 +125,7 @@ class DayOne : AppCompatActivity() {
         override fun handleMessage(msg: Message) {
 
             ObjectAnimator.ofFloat(slime, "translationX", dot1.x + dot1.width + 40f).apply {
-                duration = 500
+                duration = 700
                 start()
             }
         }
@@ -166,18 +172,26 @@ class DayOne : AppCompatActivity() {
 
                     // 좌측으로 이동하는 함수를 호출
                     touch1Handler.sendEmptyMessage(1)
-                    sleep(100L)
 
                     try {
                         // 이미지의 리소스를 변경 (좌측으로 걷기)
-                        dot1.setImageResource(R.drawable.witchtest)
-                        sleep(200L)
-                        // 걸음소리를 호출
-                        soundPool.play(footprint, 1.0f, 1.0f, 1, 0, 1f)
+                        dot1.setImageResource(R.drawable.witchleft1)
+                        sleep(60L)
 
-                        dot1.setImageResource(R.drawable.witchtest)
-                        sleep(200L)
+                        // 걸음소리를 호출
+                        soundPool.play(footprint, 0.2f, 0.2f, 1, 0, 1f)
+
+                        dot1.setImageResource(R.drawable.witchleft2)
+                        sleep(60L)
+                        dot1.setImageResource(R.drawable.witchleft3)
+                        sleep(60L)
+                        dot1.setImageResource(R.drawable.witchleft4)
+                        sleep(60L)
                         slime2Handler.sendEmptyMessage(1)
+                        dot1.setImageResource(R.drawable.witchleft5)
+                        sleep(60L)
+                        dot1.setImageResource(R.drawable.witchleft4)
+                        sleep(60L)
                     }
                     catch (e: Exception) {
                     }
@@ -195,24 +209,32 @@ class DayOne : AppCompatActivity() {
 
                     // 우측으로 이동하는 함수를 호출
                     touch2Handler.sendEmptyMessage(1)
-                    sleep(100L)
 
                     try {
                         // 이미지의 리소스를 변경 (우측으로 걷기)
-                        dot1.setImageResource(R.drawable.dot_right)
-                        sleep(200L)
-                        // 걸음소리를 호출
-                        soundPool.play(footprint, 1.0f, 1.0f, 1, 0, 1f)
+                        dot1.setImageResource(R.drawable.witchright1)
+                        sleep(60L)
 
-                        dot1.setImageResource(R.drawable.dot_right_2)
-                        sleep(200L)
+                        // 걸음소리를 호출
+                        soundPool.play(footprint, 0.2f, 0.2f, 1, 0, 1f)
+
+                        dot1.setImageResource(R.drawable.witchright2)
+                        sleep(60L)
+                        dot1.setImageResource(R.drawable.witchright3)
+                        sleep(60L)
                         slimeHandler.sendEmptyMessage(1)
+                        dot1.setImageResource(R.drawable.witchright4)
+                        sleep(60L)
+                        dot1.setImageResource(R.drawable.witchright5)
+                        sleep(60L)
+                        dot1.setImageResource(R.drawable.witchright4)
+                        sleep(60L)
                     }
                     catch (e: Exception) {
                     }
                 }
             }
-            return dot1.setImageResource(R.drawable.witchdot1)
+            return dot1.setImageResource(R.drawable.witch)
             super.run()
         }
     }
@@ -268,5 +290,9 @@ class DayOne : AppCompatActivity() {
             }
             else -> return super.onTouchEvent(event)
         }
+    }
+
+    private fun Loading() {
+        sleep(1000)
     }
 }
