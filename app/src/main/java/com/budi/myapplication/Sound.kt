@@ -7,5 +7,4 @@ data class Sound(
         @PrimaryKey val uid: Int,
         @ColumnInfo(name = "bgm") var bgm: Int,
         @ColumnInfo(name = "effect") var effect: Int
-/*        @ColumnInfo(name = "day") val day : Int*/
 )

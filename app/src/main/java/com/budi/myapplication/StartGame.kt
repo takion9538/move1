@@ -52,7 +52,6 @@ class StartGame : AppCompatActivity() {
         // startgame 게임 시작
         startgame.setOnClickListener {
             finish()
-            Log.d("로그", "finish");
         }
     }
 }

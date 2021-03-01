@@ -19,7 +19,7 @@ abstract class SoundDatabase : RoomDatabase() {
             if (INSTANCE == null) {
                 synchronized(SoundDatabase::class) {
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
-                            SoundDatabase::class.java, "sound.db")
+                            SoundDatabase::class.java, "database-name")
                             .fallbackToDestructiveMigration()
                             .build()
                 }

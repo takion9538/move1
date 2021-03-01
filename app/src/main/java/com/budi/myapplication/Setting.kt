@@ -28,12 +28,10 @@ import kotlin.concurrent.thread
 
 class Setting : AppCompatActivity() {
 
-    private var soundDb : SoundDatabase? = null
-
     var day = 0
-    var uid = 1
-    var bgm = 1
-    var effect = 2
+    var uid = 0
+    var bgm = 0
+    var effect = 0
 
 
     // 셋팅 화면
@@ -41,7 +39,7 @@ class Setting : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val db = Room.databaseBuilder(applicationContext,SoundDatabase::class.java, "sound")
+        val db = Room.databaseBuilder(applicationContext,SoundDatabase::class.java, "database-name")
                 .allowMainThreadQueries()
                 .build()
 
@@ -58,12 +56,17 @@ class Setting : AppCompatActivity() {
             val intent3 = Intent(this, MainActivity::class.java)
             startActivity(intent3)
         }
+
+
+        var soundData = db.soundDao().getAll()
+
+        setting_bg.progress = soundData[0].bgm
+        setting_other.progress = soundData[0].effect
+
         //백그라운드
         setting_bg.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-
-                seekBar!!.progress = bgm
-
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -72,7 +75,7 @@ class Setting : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 Log.d("bgm stop 로그", "${seekBar!!.progress}")
 
-                bgm = seekBar!!.progress
+                bgm = seekBar.progress
 
                 db.soundDao().update(
                         Sound(
@@ -84,7 +87,7 @@ class Setting : AppCompatActivity() {
 
                 var soundData = db.soundDao().getAll()
 
-                Log.d("db 로그", "${soundData}")
+                Log.d("db 로그", "${soundData[0].bgm}")
 
             }
 
@@ -93,22 +96,16 @@ class Setting : AppCompatActivity() {
         //그외 사운드
         setting_other.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-
-                //onProgressChanged : "$progress"
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-                var soundData = db.soundDao().getAll()
-
-                seekBar!!.progress = effect
 
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 Log.d("effect stop 로그", "${seekBar!!.progress}")
 
-                effect = seekBar!!.progress
+                effect = seekBar.progress
 
                 db.soundDao().update(
                         Sound(
@@ -120,7 +117,7 @@ class Setting : AppCompatActivity() {
 
                 var soundData = db.soundDao().getAll()
 
-                Log.d("db 로그", "$soundData")
+                Log.d("db 로그", "${soundData[0].effect}")
 
             }
         })

@@ -19,10 +19,10 @@ class MainActivity : AppCompatActivity() {/*
         SoundPool(8, AudioManager.STREAM_MUSIC, 1)
     }*/
 
-    var day = 0/*
-    var uid = 1
+    var day = 0
+    var uid = 0
     var bgm = 0
-    var effect = 0*/
+    var effect = 6
 
     // onCreate 함수 선언
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,26 +30,9 @@ class MainActivity : AppCompatActivity() {/*
 
         MediaPlayer.create(applicationContext, R.raw.restinforest)
 
-/*        val db = Room.databaseBuilder(applicationContext,SoundDatabase::class.java, "database-name")
+        val db = Room.databaseBuilder(applicationContext,SoundDatabase::class.java, "database-name")
                 .allowMainThreadQueries()
-                .build()*/
-
-/*        db.soundDao().insert(
-                Sound(
-                        uid = uid,
-                        bgm = bgm,
-                        effect = effect*//*,
-                        day = day*//*
-                )
-        )*/
-
-//        db.soundDao().delete()
-/*
-
-        var soundData = db.soundDao().getAll().joinToString()
-
-        Log.d("db 로그", "$soundData")
-*/
+                .build()
 
         // 네비게이션 바와 상태창 숨기기
         this.getWindow().getDecorView().setSystemUiVisibility(
@@ -60,12 +43,12 @@ class MainActivity : AppCompatActivity() {/*
                         or SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
                         or SYSTEM_UI_FLAG_IMMERSIVE)
 
-        if (day == 1) {
+        if (day == 0) {
             val gameStart = Intent(this, StartGame::class.java)
             startActivity(gameStart)
         }
 
-        else if (day == 0) {
+        else if (day == 1) {
             val dayOne = Intent(this, DayOne::class.java)
             startActivity(dayOne)
         }
